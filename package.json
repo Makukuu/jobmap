@@ -1,6 +1,32 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3",
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0"
+  },
+  "name": "jobmap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Makukuu/jobmap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Makukuu/jobmap/issues"
+  },
+  "homepage": "https://github.com/Makukuu/jobmap#readme",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
