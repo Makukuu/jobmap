@@ -1,4 +1,13 @@
-import styled from 'styled-components'
+import styled from "styled-components";
+
+function JobInfo({ icon, text }) {
+  return (
+    <Wrapper>
+      <span className='icon'>{icon}</span>
+      <span className='text'>{text}</span>
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled.div`
   margin-top: 0.5rem;
@@ -18,5 +27,5 @@ const Wrapper = styled.div`
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
   }
-`
-export default Wrapper
+`;
+export default JobInfo;
