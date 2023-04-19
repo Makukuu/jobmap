@@ -17,6 +17,10 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
+  DELETE_JOB_BEGIN,
+  EDIT_JOB_BEGIN,
+  EDIT_JOB_SUCCESS,
+  EDIT_JOB_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -160,19 +164,24 @@ const reducer = (state, action) => {
       showAlert: false,
     };
   }
-  if ((action.type = GET_JOBS_SUCCESS)) {
+  if (action.type === GET_JOBS_SUCCESS) {
     return {
       ...state,
       isLoading: false,
-      jobs: action.payload.jobs,
       totalJobs: action.payload.totalJobs,
+      jobs: action.payload.jobs,
       numOfPages: action.payload.numOfPages,
     };
   }
   if (action.type === SET_EDIT_JOB) {
-    console.log("in reducer ");
+    console.log("in reducer, payload id:  ", action.payload.id);
     const job = state.jobs.find((job) => job._id === action.payload.id);
     const { _id, position, company, jobLocation, jobType, status } = job;
+    console.log(
+      `found job to edit: ${
+        (_id, position, company, jobLocation, jobType, status)
+      }`
+    );
     return {
       ...state,
       isEditing: true,
@@ -183,6 +192,33 @@ const reducer = (state, action) => {
       jobType,
       status,
     };
+  }
+  if (action.type === EDIT_JOB_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === EDIT_JOB_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Job Updated!",
+    };
+  }
+  if (action.type === EDIT_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === DELETE_JOB_BEGIN) {
+    return { ...state, isLoading: true };
   }
   throw new Error(`no such action: ${action.type}`);
 };

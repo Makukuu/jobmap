@@ -21,6 +21,10 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
+  DELETE_JOB_BEGIN,
+  EDIT_JOB_BEGIN,
+  EDIT_JOB_SUCCESS,
+  EDIT_JOB_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -195,7 +199,7 @@ const AppProvider = ({ children }) => {
 
     dispatch({ type: GET_JOBS_BEGIN });
     try {
-      const { data } = await authFetch.get(url);
+      const { data } = await authFetch(url);
       const { jobs, totalJobs, numOfPages } = data;
       dispatch({
         type: GET_JOBS_SUCCESS,
@@ -206,7 +210,6 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.response);
       // logoutUser();
     }
     clearAlert();
@@ -218,11 +221,41 @@ const AppProvider = ({ children }) => {
     console.log("after dispatch");
   };
 
-  const editJob = () => {
-    console.log("edit job");
+  const editJob = async () => {
+    dispatch({ type: EDIT_JOB_BEGIN });
+    try {
+      const { position, company, jobLocation, jobType, status } = state;
+      await authFetch.patch(`/jobs/${state.editJobId}`, {
+        company,
+        position,
+        jobLocation,
+        jobType,
+        status,
+      });
+      dispatch({ type: EDIT_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_JOB_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
   };
-  const setDeleteJob = (id) => {
-    console.log(`set delete job ${id}`);
+  const deleteJob = async (jobId) => {
+    // @bug not working when dispatch DELETE_JOB_BEGIN
+    // dispatch({ type: DELETE_JOB_BEGIN });
+    try {
+      await authFetch.delete(`/jobs/${jobId}`);
+      getJobs();
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
+    }
+    clearAlert();
   };
 
   return (
@@ -239,7 +272,7 @@ const AppProvider = ({ children }) => {
         createJob,
         getJobs,
         setEditJob,
-        setDeleteJob,
+        deleteJob,
         editJob,
       }}
     >
