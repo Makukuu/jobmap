@@ -1,29 +1,42 @@
-import main from '../assets/images/main.svg'
-import styled from 'styled-components'
-import {Logo} from '../components'
+import styled from "styled-components";
+import main from "../assets/images/main.svg";
+import { Logo } from "../components";
+import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useAppContext } from "../context/appContext";
+import React from "react";
 
 const Landing = () => {
+  const { user } = useAppContext();
   return (
-    <Wrapper>
-      <nav>
-        <Logo />
-      </nav>
-      <div className="container page">
-        {/* info */}
-        <div className="info">
-          <h1>job <span>tracking</span> app</h1>
-        <p>
-        I'm baby mlkshk blue bottle you probably haven't heard of them, gatekeep portland helvetica cupping drinking vinegar. Whatever cray stumptown blog. La croix ugh chillwave tonx, godard pug whatever praxis migas selvage knausgaard.
-        </p>
-        <button className='btn btn-hero'>Login/Register</button>
-      </div>
-      <img src={main} alt='job hunt' className='img main-img' />
+    <>
+      {user && <Navigate to='/' />}
+      <Wrapper>
+        <nav>
+          <Logo />
+        </nav>
+        <div className='container page'>
+          {/* info */}
+          <div className='info'>
+            <h1>
+              job <span>tracking</span> app
+            </h1>
+            <p>
+              I'm baby wayfarers hoodie next level taiyaki brooklyn cliche blue
+              bottle single-origin coffee chia. Aesthetic post-ironic venmo,
+              quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
+              narwhal.
+            </p>
+            <Link to='/register' className='btn btn-hero'>
+              Login/Register
+            </Link>
           </div>
-    </Wrapper>
-  )
-}
-
-
+          <img src={main} alt='job hunt' className='img main-img' />
+        </div>
+      </Wrapper>
+    </>
+  );
+};
 
 const Wrapper = styled.main`
   nav {
@@ -61,7 +74,6 @@ const Wrapper = styled.main`
       display: block;
     }
   }
-`
+`;
 
-
-export default Landing
+export default Landing;

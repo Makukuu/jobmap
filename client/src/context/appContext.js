@@ -206,9 +206,9 @@ const AppProvider = ({ children }) => {
   };
 
   const getJobs = async () => {
-    const { search, searchStatus, searchType, sort } = state;
+    const { page, search, searchStatus, searchType, sort } = state;
 
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
 
     if (search) {
       url = url + `&search=${search}`;
@@ -227,7 +227,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      // logoutUser();
+      logoutUser();
     }
     clearAlert();
   };
@@ -269,7 +269,7 @@ const AppProvider = ({ children }) => {
       getJobs();
     } catch (error) {
       console.log(error.response);
-      // logoutUser();
+      logoutUser();
     }
     clearAlert();
   };
@@ -287,7 +287,7 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      // logoutUser()
+      logoutUser();
     }
     clearAlert();
   };

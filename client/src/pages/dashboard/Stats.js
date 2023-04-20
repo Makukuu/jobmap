@@ -9,6 +9,7 @@ function Stats() {
     showStats();
 
     return () => {};
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {
