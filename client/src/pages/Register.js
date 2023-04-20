@@ -62,7 +62,7 @@ function Register() {
       console.log(user);
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 800);
     }
   }, [user, navigate]);
 
@@ -101,6 +101,20 @@ function Register() {
 
         <button type='submit' className='btn btn-block' disabled={isLoading}>
           Submit
+        </button>
+        <button
+          type='button'
+          className='btn btn-block btn-hipster'
+          disabled={isLoading}
+          onClick={() => {
+            setupUser({
+              currentUser: { email: "testUser@test.com", password: "secret" },
+              endPoint: "login",
+              alertText: "Login Successful! Redirecting...",
+            });
+          }}
+        >
+          {isLoading ? "loading..." : "Demo App"}
         </button>
         <p>
           {values.isMember ? "Not a member yet?" : "Already a member?"}
